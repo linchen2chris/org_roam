@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:org_flutter/org_flutter.dart';
+import 'package:org_roam/note.dart';
 import 'package:org_roam/note_storage.dart';
 
 void main() {
@@ -33,20 +35,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final TextEditingController _controller = TextEditingController();
+  late final OrgDocument root;
 
   @override
   void initState() {
-    super.initState();
     widget.storage.readNote().then((value) {
-      _controller.text = value;
+      root = OrgDocument.parse(value);
     });
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
+    super.initState();
   }
 
   @override
@@ -57,29 +53,19 @@ class _MyHomePageState extends State<MyHomePage> {
           title: Text(widget.title),
         ),
         body: Center(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const TextField(
-                    decoration: InputDecoration(labelText: 'Title')),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: TextField(
-                    maxLines: null,
-                    minLines: 20,
-                    keyboardType: TextInputType.multiline,
-                    decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Notes',
-                    ),
-                    controller: _controller,
-                    onChanged: (text) {
-                      widget.storage.writeNote(text);
-                    },
-                  ),
+          child: Column(
+            children: [
+              Expanded(
+                  child: OrgController(
+                root: root,
+                child: ListView(
+                  children: [
+                    OrgRootWidget(
+                        child: OrgDocumentWidget(root, shrinkWrap: true)),
+                  ],
                 ),
-              ],
-            ),
+              )),
+            ],
           ),
         ),
         floatingActionButton: const FloatingActionButton(

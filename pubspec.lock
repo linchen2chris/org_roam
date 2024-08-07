@@ -49,6 +49,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.8"
+  equatable:
+    dependency: transitive
+    description:
+      name: equatable
+      sha256: c2b87cb7756efdf69892005af546c56c0b5037f54d2a88269b4f347a505e3ca2
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.5"
   external_path:
     dependency: "direct main"
     description:
@@ -78,11 +86,67 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.2"
+  flutter_slidable:
+    dependency: transitive
+    description:
+      name: flutter_slidable
+      sha256: "2c5611c0b44e20d180e4342318e1bbc28b0a44ad2c442f5df16962606fd3e8e3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.1.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_tex_js:
+    dependency: transitive
+    description:
+      name: flutter_tex_js
+      sha256: "8e731a5c89a07a75d86c83a20fa8810c5f6ea88b34b3f05746b1f59416cb2622"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
+  flutter_tex_js_android:
+    dependency: transitive
+    description:
+      name: flutter_tex_js_android
+      sha256: "99f1127fa2687d3ebdea705b4980dcfc530e65e2768a5ab43b7c3e943b504068"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.1"
+  flutter_tex_js_ios:
+    dependency: transitive
+    description:
+      name: flutter_tex_js_ios
+      sha256: b3e3a0395a84cc6ea68531460aefceb360d38ca35537a2619db4517802260c29
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.5"
+  flutter_tex_js_platform_interface:
+    dependency: transitive
+    description:
+      name: flutter_tex_js_platform_interface
+      sha256: d6d4055233af0160170cb193b52f450f81e120fdb85045596dfc52f9f9b46e26
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.0"
+  functional_zipper:
+    dependency: transitive
+    description:
+      name: functional_zipper
+      sha256: "1010a17991c1d1f9bffff65777abb34d39c5ce05bfe2203e18f395fc05296ad5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.2"
+  highlighting:
+    dependency: transitive
+    description:
+      name: highlighting
+      sha256: "196005ed9c98ee559939fcecd466fa941b9e99b3a93394691b86780ad4da50f3"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.9.0+11.8.0"
   leak_tracker:
     dependency: transitive
     description:
@@ -139,6 +203,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.12.0"
+  org_flutter:
+    dependency: "direct main"
+    description:
+      name: org_flutter
+      sha256: "62ff0c2d8abd577234d04d0018a404f4a4c77625df170d3cd8d8b0743d3d10c4"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.0.3"
+  org_parser:
+    dependency: transitive
+    description:
+      name: org_parser
+      sha256: "84f60df0f8541a19d9f3d43eb865304c6d890786665df57bb13a5474ee2f50a0"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.6.1"
   path:
     dependency: transitive
     description:
@@ -147,6 +227,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.0"
+  petit_lisp:
+    dependency: transitive
+    description:
+      name: petit_lisp
+      sha256: "559c9e7656e994b246da4c5e1eec778e8dabe284707a9b81c779557dcd824962"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.4.0"
+  petitparser:
+    dependency: transitive
+    description:
+      name: petitparser
+      sha256: c15605cd28af66339f8eb6fbe0e541bfe2d1b72d5825efc6598f3e0a31b9ad27
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.0.2"
+  plugin_platform_interface:
+    dependency: transitive
+    description:
+      name: plugin_platform_interface
+      sha256: "4820fbfdb9478b1ebae27888254d445073732dae3d6ea81f0b7e06d5dedc3f02"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.8"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -200,6 +304,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.7.0"
+  tuple:
+    dependency: transitive
+    description:
+      name: tuple
+      sha256: a97ce2013f240b2f3807bcbaf218765b6f301c3eff91092bcfa23a039e7dd151
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.2"
   vector_math:
     dependency: transitive
     description:
