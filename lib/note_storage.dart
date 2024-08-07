@@ -15,9 +15,9 @@ class NoteStorage {
     return File('$path/OrgRoams/inbox.org');
   }
 
-  Future<String> readNote() async {
+  Future<String> readNote(FileSystemEntity note) async {
     try {
-      final file = await _localFile;
+      final file = File(note.path);
       final contents = await file.readAsString();
       print('contents: $contents');
       return contents;
@@ -29,5 +29,12 @@ class NoteStorage {
   Future<File> writeNote(String note) async {
     final file = await _localFile;
     return file.writeAsString(note);
+  }
+
+  Future<List<FileSystemEntity>> listNotes() async {
+    final path = await _localPath;
+    final directory = Directory('$path/OrgRoams');
+    final files = await directory.list().toList();
+    return files;
   }
 }

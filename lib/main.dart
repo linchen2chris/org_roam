@@ -1,6 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:org_flutter/org_flutter.dart';
-import 'package:org_roam/note.dart';
 import 'package:org_roam/note_storage.dart';
 
 void main() {
@@ -35,12 +36,14 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late final OrgDocument root;
+  late OrgDocument root;
+
+  late List<FileSystemEntity> notes = [];
 
   @override
   void initState() {
-    widget.storage.readNote().then((value) {
-      root = OrgDocument.parse(value);
+    widget.storage.listNotes().then((value) {
+      notes = value;
     });
     super.initState();
   }
@@ -48,6 +51,24 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        drawer: Drawer(
+          child: ListView(padding: EdgeInsets.zero, children: [
+            const DrawerHeader(
+              child: Text('Notes'),
+            ),
+            for (var note in notes)
+              ListTile(
+                title: Text(note.path.split('/').last.split('-').last),
+                onTap: () {
+                  widget.storage.readNote(note).then((value) {
+                    setState(() {
+                      root = OrgDocument.parse(value);
+                    });
+                  });
+                },
+              )
+          ]),
+        ),
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text(widget.title),
