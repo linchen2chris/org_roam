@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:org_roam/note_storage.dart';
 
 void main() {
   runApp(const MyApp());
@@ -16,21 +17,38 @@ class MyApp extends StatelessWidget {
           seedColor: const Color(0x0063A002),
         ),
       ),
-      home: const MyHomePage(title: 'Org Roam Mobile'),
+      home: MyHomePage(title: 'Org Roam Mobile', storage: NoteStorage()),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key, required this.title});
+  const MyHomePage({super.key, required this.title, required this.storage});
 
   final String title;
+  final NoteStorage storage;
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final TextEditingController _controller = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    widget.storage.readNote().then((value) {
+      _controller.text = value;
+    });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,21 +56,26 @@ class _MyHomePageState extends State<MyHomePage> {
           backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           title: Text(widget.title),
         ),
-        body: const Center(
+        body: Center(
           child: SingleChildScrollView(
             child: Column(
               children: [
-                TextField(decoration: InputDecoration(labelText: 'Title')),
+                const TextField(
+                    decoration: InputDecoration(labelText: 'Title')),
                 Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: TextField(
                     maxLines: null,
                     minLines: 20,
                     keyboardType: TextInputType.multiline,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       labelText: 'Notes',
                     ),
+                    controller: _controller,
+                    onChanged: (text) {
+                      widget.storage.writeNote(text);
+                    },
                   ),
                 ),
               ],
