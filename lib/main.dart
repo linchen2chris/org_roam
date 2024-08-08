@@ -36,14 +36,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late OrgDocument root;
+  OrgDocument root = OrgDocument.parse('Loading notes');
 
-  late List<FileSystemEntity> notes = [];
+  List<FileSystemEntity> notes = [];
 
   @override
   void initState() {
     widget.storage.listNotes().then((value) {
-      notes = value;
+      widget.storage.readNote(value[0]).then((note) {
+        setState(() {
+          notes = value;
+          root = OrgDocument.parse(note);
+        });
+      });
     });
     super.initState();
   }
@@ -82,7 +87,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: ListView(
                   children: [
                     OrgRootWidget(
-                        child: OrgDocumentWidget(root, shrinkWrap: true)),
+                        child: OrgDocumentWidget(root!, shrinkWrap: true)),
                   ],
                 ),
               )),
