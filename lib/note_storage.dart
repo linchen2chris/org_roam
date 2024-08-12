@@ -1,13 +1,21 @@
 import 'dart:io';
 
 import 'package:external_path/external_path.dart';
+import 'package:path_provider/path_provider.dart';
 
 class NoteStorage {
   Future<String> get _localPath async {
-    final directory = await ExternalPath.getExternalStorageDirectories();
-    print(directory);
+    if (Platform.isAndroid) {
+      final directory = await ExternalPath.getExternalStorageDirectories();
+      print(directory);
 
-    return directory[1];
+      return directory[1];
+    } else if (Platform.isIOS) {
+      final download = await getApplicationDocumentsDirectory();
+      print('path is $download');
+      return download!.path;
+    }
+    return '';
   }
 
   Future<File> get _localFile async {
