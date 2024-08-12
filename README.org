@@ -1,0 +1,13 @@
+* org roam for mobile
+
+Org Roam for mobile: This is an app for myself. I have a lot of org roam nodes, I hope I can view(readonly, I won't support edit. Emacs is the best way to edit nodes) them on my phone at any time, any place.
+
+- [X] Milestone 1: list notes and could viewm them. I need manually cope all notes into my phone.
+
+#+attr_org: :width 500px :align center
+[[./images/notes.png]]
+#+attr_org: :width 500px :align center
+[[./images/note_list.png]]
+
+- [ ] Milestone 2: draw nodes like org roam ui does, the graph will shows the relationship between node.
+- [ ] Milestone 3: support git or other sync, the nodes could automatically synced into my phone.

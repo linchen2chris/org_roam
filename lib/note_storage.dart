@@ -11,7 +11,7 @@ class NoteStorage {
 
       return directory[1];
     } else if (Platform.isIOS) {
-      final download = await getApplicationDocumentsDirectory();
+      final download = await getDownloadsDirectory();
       print('path is $download');
       return download!.path;
     }
