@@ -43,7 +43,7 @@ class NoteStorage {
   Future<List<FileSystemEntity>> listNotes() async {
     final path = await _localPath;
     final directory = Directory('$path/OrgRoams');
-    final files = await directory.list().toList();
+    final files = await directory.list(recursive: true).toList();
     return files;
   }
 }

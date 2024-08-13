@@ -1,6 +1,4 @@
-* org roam for mobile
-[![Flutter CI](https://github.com/linchen2chris/org_roam/actions/workflows/main.yml/badge.svg)](https://github.com/linchen2chris/org_roam/actions/workflows/main.yml)
-[[https://github.com/linchen2chris/org_roam/actions/workflows/main.yml/badge.svg]]
+* org roam for mobile [[https://github.com/linchen2chris/org_roam/actions/workflows/main.yml/badge.svg]]
 
 Org Roam for mobile: This is an app for myself. I have a lot of org roam nodes, I hope I can view(readonly, I won't support edit. Emacs is the best way to edit nodes) them on my phone at any time, any place.
 
