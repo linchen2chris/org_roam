@@ -7,11 +7,13 @@ class NoteStorage {
   Future<String> get _localPath async {
     if (Platform.isAndroid) {
       final directory = await ExternalPath.getExternalStorageDirectories();
+      // ignore: avoid_print
       print(directory);
 
       return directory[1];
     } else if (Platform.isIOS) {
       final download = await getDownloadsDirectory();
+      // ignore: avoid_print
       print('path is $download');
       return download!.path;
     }
@@ -27,7 +29,6 @@ class NoteStorage {
     try {
       final file = File(note.path);
       final contents = await file.readAsString();
-      print('contents: $contents');
       return contents;
     } catch (e) {
       return '';

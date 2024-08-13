@@ -66,7 +66,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: ListView(
                   children: [
                     OrgRootWidget(
-                        child: OrgDocumentWidget(root!, shrinkWrap: true)),
+                        child: OrgDocumentWidget(root, shrinkWrap: true)),
                   ],
                 ),
               )),
