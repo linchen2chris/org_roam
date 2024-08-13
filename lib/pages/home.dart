@@ -42,7 +42,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             for (var note in notes)
               ListTile(
-                title: Text(note.path.split('/').last.split('-').last),
+                title: Text(note.path.split('/').last),
                 onTap: () {
                   widget.storage.readNote(note).then((value) {
                     setState(() {
