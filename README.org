@@ -10,4 +10,5 @@ Org Roam for mobile: This is an app for myself. I have a lot of org roam nodes, 
 [[./images/note_list.png]]
 
 - [ ] Milestone 2: draw nodes like org roam ui does, the graph will shows the relationship between node.
-- [ ] Milestone 3: support git or other sync, the nodes could automatically synced into my phone.
+- [X] Milestone 3: support git or other sync, the nodes could automatically synced into my phone.
+  utilize [[https://github.com/maks/MGit][mgit]] in android phone, you can sync your notes now:

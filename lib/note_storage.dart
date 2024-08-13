@@ -10,7 +10,7 @@ class NoteStorage {
       // ignore: avoid_print
       print(directory);
 
-      return directory[1];
+      return directory[0];
     } else if (Platform.isIOS) {
       final download = await getDownloadsDirectory();
       // ignore: avoid_print
@@ -42,7 +42,8 @@ class NoteStorage {
 
   Future<List<FileSystemEntity>> listNotes() async {
     final path = await _localPath;
-    final directory = Directory('$path/OrgRoams');
+    final directory =
+        Directory('$path/Download/my-hugo-blog/content/org-roam-notes');
     final files = await directory
         .list(recursive: true)
         .where((FileSystemEntity f) => f.path.endsWith('org'))
