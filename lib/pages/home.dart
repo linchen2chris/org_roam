@@ -48,6 +48,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     setState(() {
                       root = OrgDocument.parse(value);
                     });
+                    Navigator.pop(context);
                   });
                 },
               )
