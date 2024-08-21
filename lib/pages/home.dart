@@ -19,10 +19,14 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<FileSystemEntity> notes = [];
 
+  int selectedNote = 0;
+
   @override
   void initState() {
-    widget.storage.listNotes().then((value) {
-      widget.storage.readNote(value[0]).then((note) {
+    widget.storage.listNotes().then((List<FileSystemEntity> value) {
+      value.sort(
+          (b, a) => a.path.split('/').last.compareTo(b.path.split('/').last));
+      widget.storage.readNote(value[selectedNote]).then((note) {
         setState(() {
           notes = value;
           root = OrgDocument.parse(note);
@@ -40,12 +44,17 @@ class _MyHomePageState extends State<MyHomePage> {
             const DrawerHeader(
               child: Text('Notes'),
             ),
-            for (var note in notes)
+            for (final (index, note) in notes.indexed)
               ListTile(
-                title: Text(note.path.split('/').last),
+                title: Text(note.path.split('/').last,
+                    style: TextStyle(
+                        color: index == selectedNote
+                            ? Theme.of(context).colorScheme.primary
+                            : null)),
                 onTap: () {
                   widget.storage.readNote(note).then((value) {
                     setState(() {
+                      selectedNote = index;
                       root = OrgDocument.parse(value);
                     });
                     Navigator.pop(context);
