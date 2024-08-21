@@ -46,11 +46,14 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             for (final (index, note) in notes.indexed)
               ListTile(
-                title: Text(note.path.split('/').last,
-                    style: TextStyle(
-                        color: index == selectedNote
-                            ? Theme.of(context).colorScheme.primary
-                            : null)),
+                dense: true,
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 8.0, vertical: 0.0),
+                selected: index == selectedNote,
+                minTileHeight: 4.0,
+                selectedColor: Theme.of(context).colorScheme.primary,
+                selectedTileColor: Theme.of(context).focusColor,
+                title: Text(note.path.split('/').last),
                 onTap: () {
                   widget.storage.readNote(note).then((value) {
                     setState(() {
