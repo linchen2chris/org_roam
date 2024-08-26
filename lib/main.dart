@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:org_roam/note_storage.dart';
+import 'package:org_roam/pages/create_note.dart';
 import 'package:org_roam/pages/home.dart';
 
 void main() {
@@ -18,7 +19,13 @@ class MyApp extends StatelessWidget {
           seedColor: const Color(0x0063A002),
         ),
       ),
-      home: MyHomePage(title: 'Org Roam Mobile', storage: NoteStorage()),
+      initialRoute: '/',
+      routes: {
+        '/': (context) =>
+            MyHomePage(title: 'Org Roam Mobile', storage: NoteStorage()),
+        '/new': (context) =>
+            CreateNotePage(title: 'Create Note', storage: NoteStorage()),
+      },
     );
   }
 }

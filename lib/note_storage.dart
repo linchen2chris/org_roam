@@ -20,9 +20,23 @@ class NoteStorage {
     return '';
   }
 
-  Future<File> get _localFile async {
+  Future<File> _captureForToday() async {
     final path = await _localPath;
-    return File('$path/OrgRoams/inbox.org');
+    final todayString = DateTime.now().toString().split(' ')[0];
+    final file = File(
+        '$path/Download/my-hugo-blog/content/org-roam-notes/daily/$todayString.org');
+
+    // Check if the file exists, and create it if it doesn't.
+    if (!await file.exists()) {
+      await file.create(recursive: true);
+    }
+
+    return file;
+  }
+
+  Future<String> readToday() async {
+    final file = await _captureForToday();
+    return file.readAsString();
   }
 
   Future<String> readNote(FileSystemEntity note) async {
@@ -35,9 +49,14 @@ class NoteStorage {
     }
   }
 
-  Future<File> writeNote(String note) async {
-    final file = await _localFile;
+  Future<File> captureNote(String note) async {
+    final file = await _captureForToday();
     return file.writeAsString(note);
+  }
+
+  Future<File> editNote(FileSystemEntity note, String content) async {
+    final file = File(note.path);
+    return file.writeAsString(content);
   }
 
   Future<List<FileSystemEntity>> listNotes() async {

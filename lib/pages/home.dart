@@ -67,6 +67,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Column(
                     children: [
                       TextField(
+                        autofocus: true,
                         onChanged: (value) {
                           search(value);
                         },
@@ -132,10 +133,10 @@ class _MyHomePageState extends State<MyHomePage> {
             ],
           ),
         ),
-        floatingActionButton: const FloatingActionButton(
-          onPressed: null,
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => Navigator.pushNamed(context, '/new'),
           tooltip: 'New Note',
-          child: Icon(Icons.add),
+          child: const Icon(Icons.add),
         ));
   }
 }
