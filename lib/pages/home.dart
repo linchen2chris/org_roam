@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:path/path.dart' show dirname;
 import 'package:flutter/material.dart';
 import 'package:org_flutter/org_flutter.dart';
 import 'package:org_roam/note_storage.dart';
@@ -19,6 +20,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<FileSystemEntity> notes = [];
   List<FileSystemEntity> filteredNotes = [];
+
+  String path = '';
 
   int selectedNote = 0;
 
@@ -48,6 +51,7 @@ class _MyHomePageState extends State<MyHomePage> {
         setState(() {
           notes = value;
           filteredNotes = value;
+          path = dirname(value[selectedNote].path);
           root = OrgDocument.parse(note);
         });
       });
@@ -77,6 +81,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               .then((value) {
                             setState(() {
                               root = OrgDocument.parse(value);
+                              path = dirname(filteredNotes[0].path);
                             });
                             Navigator.pop(context);
                           });
@@ -106,6 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         setState(() {
                           selectedNote = index;
                           root = OrgDocument.parse(value);
+                          path = dirname(note.path);
                         });
                         Navigator.pop(context);
                       });
@@ -126,7 +132,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: ListView(
                   children: [
                     OrgRootWidget(
-                        child: OrgDocumentWidget(root, shrinkWrap: true)),
+                        child: OrgDocumentWidget(root, shrinkWrap: true),
+                        loadImage: (OrgLink link) {
+                          return Image.file(
+                              File('$path/${link.location.split(":").last}'));
+                        }),
                   ],
                 ),
               )),

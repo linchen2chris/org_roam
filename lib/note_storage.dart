@@ -20,11 +20,14 @@ class NoteStorage {
     return '';
   }
 
-  Future<File> _captureForToday() async {
+  Future<String> get notePath async {
     final path = await _localPath;
+    return '$path/Download/my-hugo-blog/content/org-roam-notes';
+  }
+
+  Future<File> _captureForToday() async {
     final todayString = DateTime.now().toString().split(' ')[0];
-    final file = File(
-        '$path/Download/my-hugo-blog/content/org-roam-notes/daily/$todayString.org');
+    final file = File('${await notePath}/daily/$todayString.org');
 
     // Check if the file exists, and create it if it doesn't.
     if (!await file.exists()) {
@@ -60,10 +63,7 @@ class NoteStorage {
   }
 
   Future<List<FileSystemEntity>> listNotes() async {
-    final path = await _localPath;
-    final directory =
-        Directory('$path/Download/my-hugo-blog/content/org-roam-notes');
-    final files = await directory
+    final files = await Directory(await notePath)
         .list(recursive: true)
         .where((FileSystemEntity f) => f.path.endsWith('org'))
         .toList();
