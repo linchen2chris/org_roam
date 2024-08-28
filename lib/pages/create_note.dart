@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:org_roam/note_storage.dart';
+import 'package:org_roam/pages/key_listener.dart';
 
 class CreateNotePage extends StatefulWidget {
   const CreateNotePage({super.key, required this.title, required this.storage});
@@ -36,15 +37,30 @@ class _CreateNotePageState extends State<CreateNotePage> {
             children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
-                child: TextField(
-                  maxLines: null,
-                  minLines: 20,
-                  keyboardType: TextInputType.multiline,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'Notes',
+                child: KeyListener(
+                  insert: (String block, {int position = 0}) {
+                    _noteController.text += block;
+                    _noteController.selection = TextSelection.fromPosition(
+                        TextPosition(
+                            offset: _noteController.text.length - position));
+                  },
+                  save: () {
+                    widget.storage
+                        .captureNote(_noteController.text)
+                        .then((value) {
+                      Navigator.pop(context);
+                    });
+                  },
+                  child: TextField(
+                    maxLines: null,
+                    minLines: 20,
+                    keyboardType: TextInputType.multiline,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      labelText: 'Notes',
+                    ),
+                    controller: _noteController,
                   ),
-                  controller: _noteController,
                 ),
               ),
             ],
