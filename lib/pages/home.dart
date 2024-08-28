@@ -4,6 +4,7 @@ import 'package:path/path.dart' show dirname;
 import 'package:flutter/material.dart';
 import 'package:org_flutter/org_flutter.dart';
 import 'package:org_roam/note_storage.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title, required this.storage});
@@ -16,7 +17,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  OrgDocument root = OrgDocument.parse('Loading notes');
+  OrgTree root = OrgDocument.parse('Loading notes');
 
   List<FileSystemEntity> notes = [];
   List<FileSystemEntity> filteredNotes = [];
@@ -132,7 +133,22 @@ class _MyHomePageState extends State<MyHomePage> {
                 child: ListView(
                   children: [
                     OrgRootWidget(
-                        child: OrgDocumentWidget(root, shrinkWrap: true),
+                        child: root is OrgDocument
+                            ? OrgDocumentWidget(root as OrgDocument,
+                                shrinkWrap: true)
+                            : OrgSectionWidget(root as OrgSection,
+                                shrinkWrap: true),
+                        onLinkTap: (OrgLink link) {
+                          print('Link tapped: ${link.location},');
+                          launchUrl(Uri.parse(link.location));
+                        },
+                        onLocalSectionLinkTap: (OrgSection section) {
+                          print('section tapped: $section');
+                          setState(() {
+                            print('root changed to section');
+                            root = section;
+                          });
+                        },
                         loadImage: (OrgLink link) {
                           return Image.file(
                               File('$path/${link.location.split(":").last}'));
