@@ -9,10 +9,7 @@ import 'package:org_roam/note_storage.dart';
 class TakePictureScreen extends StatefulWidget {
   const TakePictureScreen({
     super.key,
-    required this.camera,
   });
-
-  final CameraDescription camera;
 
   @override
   TakePictureScreenState createState() => TakePictureScreenState();
@@ -21,21 +18,32 @@ class TakePictureScreen extends StatefulWidget {
 class TakePictureScreenState extends State<TakePictureScreen> {
   late CameraController _controller;
   late Future<void> _initializeControllerFuture;
+  late CameraDescription camera;
 
   @override
   void initState() {
-    super.initState();
-    // To display the current output from the Camera,
-    // create a CameraController.
-    _controller = CameraController(
-      // Get a specific camera from the list of available cameras.
-      widget.camera,
-      // Define the resolution to use.
-      ResolutionPreset.medium,
-    );
+    initCamera().then((value) {
+      setState(() {
+        camera = value;
+        _controller = CameraController(
+          // Get a specific camera from the list of available cameras.
+          value, // Define the resolution to use.
+          ResolutionPreset.medium,
+        );
+        _initializeControllerFuture = _controller.initialize();
+      });
+      super.initState();
+    });
+  }
 
-    // Next, initialize the controller. This returns a Future.
-    _initializeControllerFuture = _controller.initialize();
+  Future<CameraDescription> initCamera() async {
+    WidgetsFlutterBinding.ensureInitialized();
+
+    // Obtain a list of the available cameras on the device.
+    final cameras = await availableCameras();
+
+    // Get a specific camera from the list of available cameras.
+    return cameras.first;
   }
 
   @override
@@ -62,6 +70,7 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                     padding: const EdgeInsets.fromLTRB(0, 0, 0, 72),
                     child: CameraPreview(_controller)));
           } else {
+            print('loading...');
             // Otherwise, display a loading indicator.
             return const Center(child: CircularProgressIndicator());
           }

@@ -6,21 +6,11 @@ import 'package:org_roam/pages/create_note.dart';
 import 'package:org_roam/pages/home.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-
-  // Obtain a list of the available cameras on the device.
-  final cameras = await availableCameras();
-
-  // Get a specific camera from the list of available cameras.
-  final firstCamera = cameras.first;
-
-  runApp(MyApp(camera: firstCamera));
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key, required this.camera});
-
-  final CameraDescription camera;
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -37,10 +27,7 @@ class MyApp extends StatelessWidget {
             MyHomePage(title: 'Org Roam Mobile', storage: NoteStorage()),
         '/new': (context) =>
             CreateNotePage(title: 'Create Note', storage: NoteStorage()),
-        '/camera': (context) => TakePictureScreen(
-              // Pass the appropriate camera to the TakePictureScreen widget.
-              camera: camera,
-            ),
+        '/camera': (context) => const TakePictureScreen(),
       },
     );
   }
