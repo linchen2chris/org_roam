@@ -18,9 +18,17 @@ class _CreateNotePageState extends State<CreateNotePage> {
   final todayString = DateTime.now().toString().split(' ')[0];
   @override
   void initState() {
+    print('initState');
     widget.storage.readToday().then((note) {
-      _noteController.text = note;
+      final args = ModalRoute.of(context)!.settings.arguments;
+      print('args= $args');
+      if (args != null) {
+        _noteController.text = '$note\n\n[[file:images/$args]]\n';
+      } else {
+        _noteController.text = note;
+      }
     });
+
     super.initState();
   }
 
@@ -52,6 +60,7 @@ class _CreateNotePageState extends State<CreateNotePage> {
                     });
                   },
                   child: TextField(
+                    autofocus: true,
                     maxLines: null,
                     minLines: 20,
                     keyboardType: TextInputType.multiline,
@@ -107,6 +116,15 @@ class _CreateNotePageState extends State<CreateNotePage> {
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          widget.storage.captureNote(_noteController.text).then((value) {
+            Navigator.pushNamed(context, '/camera');
+          });
+        },
+        tooltip: 'camera',
+        child: const Icon(Icons.camera_alt),
       ),
     );
   }
