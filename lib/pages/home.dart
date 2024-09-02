@@ -65,11 +65,11 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return OrgController(
-      interpretEmbeddedSettings: true,
+      // interpretEmbeddedSettings: true,
       restorationId: _restorationId,
       root: root,
       settings: const OrgSettings(
-          startupFolded: OrgVisibilityState.contents,
+          startupFolded: OrgVisibilityState.subtree,
           hideStars: true,
           reflowText: true),
       child: Scaffold(

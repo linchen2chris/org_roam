@@ -67,43 +67,46 @@ class _CreateNotePageState extends State<CreateNotePage> {
           ),
         ),
       ),
-      bottomNavigationBar: ButtonBar(
-        alignment: MainAxisAlignment.center,
-        children: [
-          ElevatedButton(
-            onPressed: () {
-              _noteController.text += '\n* ';
-            },
-            child: const Text('*'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              _noteController.text += '\n** ';
-            },
-            child: const Text('**'),
-          ),
-          ElevatedButton(
-            onPressed: () {
-              _noteController.text += '\n*** ';
-            },
-            child: const Text('***'),
-          ),
-          ElevatedButton(
+      bottomNavigationBar: Padding(
+        padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 32.0),
+        child: ButtonBar(
+          alignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
               onPressed: () {
-                _noteController.text += '#+begin_src \n#+end_src\n';
-                _noteController.selection = TextSelection.fromPosition(
-                    TextPosition(offset: _noteController.text.length - 12));
+                _noteController.text += '\n* ';
               },
-              child: const Text('src')),
-          ElevatedButton(
-            onPressed: () {
-              widget.storage.captureNote(_noteController.text).then((value) {
-                Navigator.pop(context);
-              });
-            },
-            child: const Text('Save'),
-          ),
-        ],
+              child: const Text('*'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                _noteController.text += '\n** ';
+              },
+              child: const Text('**'),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                _noteController.text += '\n*** ';
+              },
+              child: const Text('***'),
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  _noteController.text += '#+begin_src \n#+end_src\n';
+                  _noteController.selection = TextSelection.fromPosition(
+                      TextPosition(offset: _noteController.text.length - 12));
+                },
+                child: const Text('src')),
+            ElevatedButton(
+              onPressed: () {
+                widget.storage.captureNote(_noteController.text).then((value) {
+                  Navigator.pop(context);
+                });
+              },
+              child: const Text('Save'),
+            ),
+          ],
+        ),
       ),
     );
   }
