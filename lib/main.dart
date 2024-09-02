@@ -1,4 +1,3 @@
-import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:org_roam/note_storage.dart';
 import 'package:org_roam/pages/camera.dart';

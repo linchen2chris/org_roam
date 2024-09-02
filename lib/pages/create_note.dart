@@ -18,10 +18,8 @@ class _CreateNotePageState extends State<CreateNotePage> {
   final todayString = DateTime.now().toString().split(' ')[0];
   @override
   void initState() {
-    print('initState');
     widget.storage.readToday().then((note) {
       final args = ModalRoute.of(context)!.settings.arguments;
-      print('args= $args');
       if (args != null) {
         _noteController.text = '$note\n\n[[file:images/$args]]\n';
       } else {
@@ -78,7 +76,7 @@ class _CreateNotePageState extends State<CreateNotePage> {
       ),
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.fromLTRB(0.0, 0.0, 0.0, 32.0),
-        child: ButtonBar(
+        child: OverflowBar(
           alignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(

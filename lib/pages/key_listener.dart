@@ -9,8 +9,10 @@ import 'package:flutter/services.dart';
 class KeyListener extends StatefulWidget {
   /// Creates a [KeyListener] instance.
   const KeyListener(
-      {required this.child, required this.save, required this.insert, Key? key})
-      : super(key: key);
+      {required this.child,
+      required this.save,
+      required this.insert,
+      super.key});
 
   /// The [child] widget.
   final Widget child;
@@ -38,15 +40,18 @@ class _KeyListenerState extends State<KeyListener> {
             if (HardwareKeyboard.instance.isControlPressed) {
               switch (keyEvent.logicalKey.keyLabel) {
                 case 'B':
-                  print('ctrl+b pressed');
                   widget.insert('#+begin_src \n#+end_src\n', position: 11);
                   break;
+                case 'Q':
+                  widget.insert('#+begin_quote \n#+end_quote\n');
+                  break;
+                case 'T':
+                  widget.insert('| | |\n|-+-|\n| | |\n', position: 16);
+                  break;
                 case 'S':
-                  print('ctrl+s pressed');
                   widget.save();
                   break;
                 case 'I':
-                  print('ctrl+i pressed');
                   widget.insert(
                       ':PROPERTIES:\n:ID:       ${const Uuid().v1()}\n:END:\n');
                 default:

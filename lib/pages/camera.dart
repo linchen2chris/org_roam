@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:async';
 import 'dart:io';
 
@@ -70,7 +72,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
                     padding: const EdgeInsets.fromLTRB(0, 0, 0, 72),
                     child: CameraPreview(_controller)));
           } else {
-            print('loading...');
             // Otherwise, display a loading indicator.
             return const Center(child: CircularProgressIndicator());
           }
@@ -104,7 +105,6 @@ class TakePictureScreenState extends State<TakePictureScreen> {
             );
           } catch (e) {
             // If an error occurs, log the error to the console.
-            print(e);
           }
         },
         child: const Icon(Icons.camera_alt),
@@ -121,7 +121,6 @@ class DisplayPictureScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('write image $imagePath');
     return Scaffold(
         appBar: AppBar(title: const Text('Display the Picture')),
         // The image is stored as a file on the device. Use the `Image.file`

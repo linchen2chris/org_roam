@@ -153,21 +153,36 @@ class _MyHomePageState extends State<MyHomePage> {
                             : OrgSectionWidget(root as OrgSection,
                                 shrinkWrap: true),
                         onLinkTap: (OrgLink link) {
-                          print('Link tapped: ${link.location},');
                           launchUrl(Uri.parse(link.location));
                         },
                         onLocalSectionLinkTap: (OrgSection section) {
-                          print('section tapped: $section');
-                          final priority = section.ids;
-                          print('priority: $priority');
                           setState(() {
                             root = section;
                             _restorationId = section.ids[0];
                           });
                         },
                         loadImage: (OrgLink link) {
-                          return Image.file(
-                              File('$path/${link.location.split(":").last}'));
+                          return Container(
+                            width: double.infinity,
+                            margin: const EdgeInsets.only(
+                                left: 40, top: 0, right: 40, bottom: 20),
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius:
+                                  const BorderRadius.all(Radius.circular(20)),
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 5,
+                                  blurRadius: 7,
+                                  offset: const Offset(
+                                      0, 3), // changes position of shadow
+                                ),
+                              ],
+                            ),
+                            child: Image.file(
+                                File('$path/${link.location.split(":").last}')),
+                          );
                         }),
                   ],
                 )),
