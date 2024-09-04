@@ -165,7 +165,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           return Container(
                             width: double.infinity,
                             margin: const EdgeInsets.only(
-                                left: 40, top: 0, right: 40, bottom: 20),
+                                left: 40, top: 0, right: 40, bottom: 0),
                             decoration: BoxDecoration(
                               color: Colors.white,
                               borderRadius:
