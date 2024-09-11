@@ -118,7 +118,9 @@ class _CreateNotePageState extends State<CreateNotePage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           widget.storage.captureNote(_noteController.text).then((value) {
-            Navigator.pushNamed(context, '/camera');
+            Navigator.pushNamed(context, '/camera').then((imageName) {
+              _noteController.text += '[[file:images/$imageName]]';
+            });
           });
         },
         tooltip: 'camera',

@@ -149,8 +149,8 @@ class DisplayPictureScreen extends StatelessWidget {
               final fileName = imagePath.split('/').last;
               await File(imagePath)
                   .copy('${await noteStorage.notePath}/daily/images/$fileName');
-              Navigator.popUntil(context, ModalRoute.withName('/'));
-              await Navigator.pushNamed(context, '/new', arguments: fileName);
+              Navigator.pop(context);
+              Navigator.pop(context, fileName);
             }));
   }
 }
