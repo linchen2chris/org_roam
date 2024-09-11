@@ -22,8 +22,6 @@ class _MyHomePageState extends State<MyHomePage> {
   List<FileSystemEntity> notes = [];
   List<FileSystemEntity> filteredNotes = [];
 
-  String path = '';
-
   int selectedNoteIndex = 0;
 
   String? _restorationId;
@@ -51,9 +49,8 @@ class _MyHomePageState extends State<MyHomePage> {
         element.path.contains(todayString) && element.path.contains('daily'));
 
     if (todayNoteIndex != -1) {
-      widget.storage.readNote(notes[todayNoteIndex]).then((note) {
+      widget.storage.readToday().then((note) {
         setState(() {
-          path = dirname(notes[todayNoteIndex].path);
           root = OrgDocument.parse(note);
           selectedNoteIndex = todayNoteIndex;
         });
@@ -105,7 +102,6 @@ class _MyHomePageState extends State<MyHomePage> {
                                 .then((value) {
                               setState(() {
                                 root = OrgDocument.parse(value);
-                                path = dirname(filteredNotes[0].path);
                               });
                               Navigator.pop(context);
                             });
@@ -135,7 +131,6 @@ class _MyHomePageState extends State<MyHomePage> {
                           setState(() {
                             selectedNoteIndex = index;
                             root = OrgDocument.parse(value);
-                            path = dirname(note.path);
                           });
                           Navigator.pop(context);
                         });
@@ -193,8 +188,8 @@ class _MyHomePageState extends State<MyHomePage> {
                                 ),
                               ],
                             ),
-                            child: Image.file(
-                                File('$path/${link.location.split(":").last}')),
+                            child: Image.file(File(
+                                '${dirname(notes[selectedNoteIndex].path)}/${link.location.split(":").last}')),
                           );
                         }),
                   ],
