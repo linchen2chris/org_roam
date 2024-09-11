@@ -24,7 +24,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   String path = '';
 
-  int selectedNote = 0;
+  int selectedNoteIndex = 0;
 
   String? _restorationId;
 
@@ -45,19 +45,32 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void gotoTodayNote() {
+    final todayString = DateTime.now().toString().split(' ')[0];
+    final todayNoteIndex = notes.indexWhere((element) =>
+        element.path.contains(todayString) && element.path.contains('daily'));
+
+    if (todayNoteIndex != -1) {
+      widget.storage.readNote(notes[todayNoteIndex]).then((note) {
+        setState(() {
+          path = dirname(notes[todayNoteIndex].path);
+          root = OrgDocument.parse(note);
+          selectedNoteIndex = todayNoteIndex;
+        });
+      });
+    }
+  }
+
   @override
   void initState() {
     widget.storage.listNotes().then((List<FileSystemEntity> value) {
       value.sort(
           (b, a) => a.path.split('/').last.compareTo(b.path.split('/').last));
-      widget.storage.readNote(value[selectedNote]).then((note) {
-        setState(() {
-          notes = value;
-          filteredNotes = value;
-          path = dirname(value[selectedNote].path);
-          root = OrgDocument.parse(note);
-        });
+      setState(() {
+        notes = value;
+        filteredNotes = value;
       });
+      gotoTodayNote();
     });
     super.initState();
   }
@@ -112,7 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       dense: true,
                       contentPadding: const EdgeInsets.symmetric(
                           horizontal: 8.0, vertical: 0.0),
-                      selected: index == selectedNote,
+                      selected: index == selectedNoteIndex,
                       minTileHeight: 4.0,
                       selectedColor: Theme.of(context).colorScheme.primary,
                       selectedTileColor: Theme.of(context).focusColor,
@@ -120,7 +133,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       onTap: () {
                         widget.storage.readNote(note).then((value) {
                           setState(() {
-                            selectedNote = index;
+                            selectedNoteIndex = index;
                             root = OrgDocument.parse(value);
                             path = dirname(note.path);
                           });
@@ -190,7 +203,8 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
           ),
           floatingActionButton: FloatingActionButton(
-            onPressed: () => Navigator.pushNamed(context, '/new'),
+            onPressed: () => Navigator.pushNamed(context, '/new')
+                .then((_) => gotoTodayNote()),
             tooltip: 'New Note',
             child: const Icon(Icons.add),
           )),
