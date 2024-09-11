@@ -21,6 +21,8 @@ class TakePictureScreenState extends State<TakePictureScreen> {
   late CameraController _controller;
   late Future<void> _initializeControllerFuture;
   late CameraDescription camera;
+  double zoom = 1.0;
+  double _scaleFactor = 1.0;
 
   @override
   void initState() {
@@ -67,10 +69,21 @@ class TakePictureScreenState extends State<TakePictureScreen> {
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
             // If the Future is complete, display the preview.
-            return Center(
-                child: Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 72),
-                    child: CameraPreview(_controller)));
+            return GestureDetector(
+              behavior: HitTestBehavior.translucent,
+              onScaleStart: (details) {
+                zoom = _scaleFactor;
+              },
+              onScaleUpdate: (details) {
+                _scaleFactor = zoom * details.scale;
+                _controller.setZoomLevel(_scaleFactor);
+                debugPrint('Gesture updated');
+              },
+              child: Center(
+                  child: Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 72),
+                      child: CameraPreview(_controller))),
+            );
           } else {
             // Otherwise, display a loading indicator.
             return const Center(child: CircularProgressIndicator());
